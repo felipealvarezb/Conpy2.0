@@ -1,0 +1,12 @@
+from django.contrib import admin
+from django.urls import path
+from negocio import views as nviews
+
+
+urlpatterns = [
+    path('', nviews.home, name="home"),
+    path('ingresos/', nviews.ingresos, name="ingresos"),
+    path('ingresos/editar/', nviews.editar, name="editar"),   
+    path('eliminar/<int:id>', nviews.eliminar, name="eliminar"),
+    path('ingresos/editar/<int:id>', nviews.editar, name="editar"),  
+]
