@@ -5,6 +5,9 @@ from .forms import DatoForm
 def home(request):
     return render(request, "negocio/home.html")
 
+def perfil(request):
+    return render(request,"negocio/perfil.html")
+
 def ingresos(request):
     datos = Dato.objects.all()
     formulario = DatoForm(request.POST or None) 
