@@ -8,6 +8,10 @@ def home(request):
     return render(request, "negocio/home.html")
 
 @login_required(login_url="/login/")
+def notificaciones(request):
+    return render(request,'negocio/notificaciones.html')
+
+@login_required(login_url="/login/")
 def perfil(request):
     return render(request,"negocio/perfil.html")
 

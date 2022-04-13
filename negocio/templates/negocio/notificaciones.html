@@ -1,0 +1,51 @@
+{% extends 'negocio/base.html' %}
+{% block content %}
+<div class="container">
+    <div class="header">
+        <h1>NOTIFICACIONES</h1>
+    </div>
+    <div class="card mt-3">
+        <div class="card-body">
+          <h5 class="card-title">en este espacio podemos poner informacion sobre que hay en este espacio</h5>
+          <p class="card-text">En este espacio podrás agregar, editar o eliminar notificaciones en el calendario, donde podras ver que tareas tienes para hacer para cierta fecha.</p>
+          <p class="card-text">Cuando esta fecha esté por acercarse, se te notificará por medio de (TOCA DEFINIR ESTO) y tambien aparecerá acá</p>
+        </div>
+      </div>
+    <div class="card mt-3">
+      <div class="card-body">
+          <h5 class="card-title">Tabla de Notificaciones</h5>
+          <table class="table">
+              <thead>
+                <tr>
+                  <th>Fecha Creación</th>
+                  <th>Descripcion</th>
+                  <th>Fecha Límite</th>
+                </tr>
+              </thead>
+            </table>
+      </div>
+    </div>
+    <div class="card mt-3">
+        <div class="card-body">
+            <h5 class="card-title">Registro ingresos / gastos</h5>
+            <form action="" method="POST">
+              {% csrf_token %}
+              {% for campo in formulario %}
+              <div class="mb-3 col-6">
+                <label for="" class="form-label">{{ campo.label }}: </label>
+                <input 
+                type="{{ campo.field.widget.input_type  }}" 
+                name="{{ campo.name }}" 
+                id="" 
+                placeholder="{{ campo.label }}"
+                class="form-control" />
+              </div>
+              <div class="col-12 help-text">{{ campo.errors }}</div>
+              {% endfor %}
+
+              <input type="submit" value="Registrar" class="btn btn-success">
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
