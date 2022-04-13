@@ -24,7 +24,8 @@ SECRET_KEY = 'django-insecure-5h*&0qmip6t*a8_0a%hi)m8*cz4r%_f%v&i7!&b5@$vm@j2j05
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+LOGOUT_REDIRECT_URL = "home"
+LOGIN_REDIRECT_URL = "home" 
 ALLOWED_HOSTS = []
 
 
@@ -39,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'fontawesomefree',
     'negocio',
+    'autenticacion',
 ]
 
 MIDDLEWARE = [
