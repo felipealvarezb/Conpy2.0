@@ -11,5 +11,6 @@ urlpatterns = [
     path('eliminar/<int:id>', nviews.eliminar, name="eliminar"),
     path('ingresos/editar/<int:id>', nviews.editar, name="editar"), 
     path('perfil/',nviews.perfil,name='perfil'), 
-    path('notificaciones/',nviews.notificaciones,name='notificaciones',)
+    path('notificaciones/',nviews.notificaciones,name='notificaciones',),
+    path('eliminar_noti/<int:id>',nviews.eliminar_noti,name=('eliminar_noti'))
 ]

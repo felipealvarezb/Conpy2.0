@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-
+from django.core.mail import send_mail
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-5h*&0qmip6t*a8_0a%hi)m8*cz4r%_f%v&i7!&b5@$vm@j2j05
 DEBUG = True
 LOGOUT_REDIRECT_URL = "home"
 LOGIN_REDIRECT_URL = "home" 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = []#'CONPY.com','181.132.141.169','127.0.0.1'
+
 
 
 # Application definition

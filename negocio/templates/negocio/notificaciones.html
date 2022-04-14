@@ -15,30 +15,51 @@
       <div class="card-body">
           <h5 class="card-title">Tabla de Notificaciones</h5>
           <table class="table">
-              <thead>
-                <tr>
-                  <th>Fecha Creación</th>
-                  <th>Descripcion</th>
-                  <th>Fecha Límite</th>
-                </tr>
-              </thead>
-            </table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Descripcion</th>
+                <th>Fecha Limite</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for dato in datos %}
+              <tr>
+                <td>{{ dato.id }}</td>
+                <td>{{ dato.descripcion }}</td>
+                <td>{{ dato.fecha_lim }}</td>
+                <td> <a href="{% url 'editar'%}" class="btn btn-info" role="button">Editar</a> | 
+                  <a href="{% url 'eliminar_noti' dato.id %}" class="btn btn-danger" role="button">Borrar</a> </td>
+              </tr>
+              {% endfor %}
+          </tbody>
+          </table>
       </div>
     </div>
     <div class="card mt-3">
         <div class="card-body">
-            <h5 class="card-title">Registro ingresos / gastos</h5>
+            <h5 class="card-title">Crear Norificaciones</h5>
             <form action="" method="POST">
               {% csrf_token %}
+
               {% for campo in formulario %}
               <div class="mb-3 col-6">
                 <label for="" class="form-label">{{ campo.label }}: </label>
-                <input 
-                type="{{ campo.field.widget.input_type  }}" 
+                {% if campo.field.widget.input_type  != "text" %}
+                <input
+                type="{{ campo.field.widget.input_type  }}"
                 name="{{ campo.name }}" 
                 id="" 
                 placeholder="{{ campo.label }}"
                 class="form-control" />
+                {% else %} 
+                <input
+                type="date"
+                name="{{ campo.name }}" 
+                id="" 
+                placeholder="{{ campo.label }}"
+                class="form-control" />
+                {% endif %}
               </div>
               <div class="col-12 help-text">{{ campo.errors }}</div>
               {% endfor %}
