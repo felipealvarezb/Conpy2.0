@@ -37,7 +37,7 @@
     <div class="card mt-3">
         <div class="card-body">
             <h5 class="card-title">Crear Notificaciones</h5>
-            <form action="" method="POST">
+            <form action=" {% url 'notificaciones' %} " method="POST">
               {% csrf_token %}
 
               {% for campo in formulario %}
@@ -66,5 +66,6 @@
             </form>
         </div>
     </div>
+    <p>{{ msg }}</p>
 </div>
 {% endblock %}

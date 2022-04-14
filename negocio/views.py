@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Dato, Notificacion
 from django.core.mail import send_mail
 from .forms import DatoForm, NotificacionForm
+from negocio.notificaciones import manejoNoti as mn
 
 @login_required(login_url="/login/")
 def home(request):
@@ -10,11 +11,22 @@ def home(request):
 
 @login_required(login_url="/login/")
 def notificaciones(request):
+    msg=None
     datos=Notificacion.objects.all()
     formulario = NotificacionForm(request.POST or None)
     if formulario.is_valid():
         formulario.save()
-    return render(request,'negocio/notificaciones.html',{'datos':datos,'formulario':formulario})
+        #aca puedo poner el metodo que llame a mandar correo con los datos
+        descripcion=request.POST.get('descripcion')
+        fecha=request.POST.get('fecha_lim')
+        #try:
+        mn.enviar_mail()
+        msg="Salio todo bien"
+        """except:
+            msg="hubo un error en algun lado"""
+        print (descripcion)
+
+    return render(request,'negocio/notificaciones.html',{'datos':datos,'formulario':formulario,'msg':msg})
 
 @login_required(login_url="/login/")
 def perfil(request):

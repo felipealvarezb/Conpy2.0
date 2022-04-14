@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-from django.core.mail import send_mail
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -26,7 +25,7 @@ SECRET_KEY = 'django-insecure-5h*&0qmip6t*a8_0a%hi)m8*cz4r%_f%v&i7!&b5@$vm@j2j05
 DEBUG = True
 LOGOUT_REDIRECT_URL = "home"
 LOGIN_REDIRECT_URL = "home" 
-ALLOWED_HOSTS = []#'CONPY.com','181.132.141.169','127.0.0.1'
+ALLOWED_HOSTS = []
 
 
 
@@ -126,3 +125,26 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+
+
+"""#email settings FORMA DE PRACTICA
+EMAIL_HOST='localhost'
+EMAIL_PORT='1025'
+EMAIL_HOST_USER=''
+EMAIL_HOST_PASSWORD=''
+EMAIL_USE_TLS=False
+#EMAIL_USE_SSL=False
+"""
+#cada correo es diefrente, este ejemplo va a ser con el correo de gmail((((((((Proyectoi1.))))))))))))))))))) contra del correo
+ 
+#configurar bien el .env
+
+#este es mas profesional
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_PORT=587
+EMAIL_HOST_USER='Conpyp1@gmail.com'
+EMAIL_HOST_PASSWORD=''
+EMAIL_USE_TLS=True
+#EMAIL_USE_SSL=False
