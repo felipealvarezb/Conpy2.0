@@ -14,17 +14,17 @@ def notificaciones(request):
     msg=None
     datos=Notificacion.objects.all()
     formulario = NotificacionForm(request.POST or None)
+    print(request.POST.get('fecha_lim'))
     if formulario.is_valid():
         formulario.save()
-        #aca puedo poner el metodo que llame a mandar correo con los datos
         descripcion=request.POST.get('descripcion')
         fecha=request.POST.get('fecha_lim')
-        #try:
-        mn.enviar_mail()
-        msg="Salio todo bien"
-        """except:
-            msg="hubo un error en algun lado"""
-        print (descripcion)
+        try:
+            #mn.enviar_mail_nueva_noti(descripcion,fecha)
+            msg="La notificación se ha creado correctamente"
+        except:
+            msg="hubo un error"
+       
 
     return render(request,'negocio/notificaciones.html',{'datos':datos,'formulario':formulario,'msg':msg})
 
@@ -35,7 +35,6 @@ def perfil(request):
 @login_required(login_url="/login/")
 def ingresos(request):
     datos = Dato.objects.all()
-    print(datos)
     formulario = DatoForm(request.POST or None) 
     
     if formulario.is_valid():

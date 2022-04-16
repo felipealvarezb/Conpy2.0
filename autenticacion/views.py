@@ -1,6 +1,11 @@
+from datetime import date,datetime
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
+from negocio.forms import NotificacionForm
+
+from negocio.models import Notificacion
 from .forms import LoginForm, SignUpForm
+from negocio.notificaciones import manejoNoti as mn
 # Create your views here.
 def login_view(request):
     form = LoginForm(request.POST or None)
@@ -14,6 +19,7 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
+                mn.check_notificaciones_db()
                 return redirect("/")
             else:
                 msg = 'Invalid credentials'

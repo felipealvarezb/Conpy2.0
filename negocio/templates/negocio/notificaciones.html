@@ -6,9 +6,9 @@
     </div>
     <div class="card mt-3">
         <div class="card-body">
-          <h5 class="card-title">en este espacio podemos poner informacion sobre que hay en este espacio</h5>
-          <p class="card-text">En este espacio podrás agregar, editar o eliminar notificaciones en el calendario, donde podras ver que tareas tienes para hacer para cierta fecha.</p>
-          <p class="card-text">Cuando esta fecha esté por acercarse, se te notificará por medio de (TOCA DEFINIR ESTO) y tambien aparecerá acá</p>
+          <h5 class="card-title">Informcaion sobre esta pagina:</h5>
+          <p class="card-text">En este espacio podrás agregar, editar o eliminar notificaciones/tareas que tienes.</p>
+          <p class="card-text">Cuando esta fecha esté por acercarse, se te notificará por medio de coreo electronico y tambien se mostrará un mensaje en la pagina</p>
         </div>
       </div>
     <div class="card mt-3">
@@ -66,6 +66,9 @@
             </form>
         </div>
     </div>
+    {% if msg %}
     <p>{{ msg }}</p>
+    {% else %}
+    {% endif %}
 </div>
 {% endblock %}
