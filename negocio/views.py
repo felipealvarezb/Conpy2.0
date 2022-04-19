@@ -57,3 +57,8 @@ def eliminar_noti(request,id):
     datos=Notificacion.objects.get(id=id)
     datos.delete()
     return redirect('notificaciones')
+
+
+@login_required(login_url='/login/')
+def clientes(request):
+    return render(request,'negocio/clientes.html')
