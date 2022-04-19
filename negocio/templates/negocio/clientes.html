@@ -6,28 +6,36 @@
     </div>
     <div class="card mt-3">
         <div class="card-body">
-          <h5 class="card-title">Informcaion sobre esta pagina:</h5>
+          <h5 class="card-title">Informacion sobre esta pagina:</h5>
           <p class="card-text">En este espacio podrás ver, agregar, editar y eliminar a tus clientes</p>
           <p class="card-text">Cada cliente </p>
         </div>
       </div>
     <div class="card mt-3">
       <div class="card-body">
-          <h5 class="card-title">Tabla de Notificaciones</h5>
+          <h5 class="card-title">Tabla de Clientes</h5>
           <table class="table">
+              <form action=" {% url 'buscar_dato' %} " method="POST">
+                {% csrf_token %}
+              <input type="text" placeholder="buscar" name="busqueda"><button class="btn" type="submit"><i class="fas fa-search"></i></button>
+          </form>
             <thead>
               <tr>
-                <th>Descripcion</th>
-                <th>Fecha Limite</th>
+                <th>Nombre</th>
+                <th>Cedula</th>
+                <th>Correo</th>
+                <th>Celular</th>
               </tr>
             </thead>
             <tbody>
             {% for dato in datos %}
               <tr>
-                <td>{{ dato.descripcion }}</td>
-                <td>{{ dato.fecha_lim }}</td>
+                <td>{{ dato.nombre_cliente }}</td>
+                <td>{{ dato.cedula_cliente }}</td>
+                <td>{{ dato.correo_cliente }}</td>
+                <td>{{ dato.celular_cliente }}</td>
                 <td> <a href="{% url 'editar'%}" class="btn btn-info" role="button">Editar</a> | 
-                  <a href="{% url 'eliminar_noti' dato.id %}" class="btn btn-danger" role="button">Borrar</a> </td>
+                  <a href="{% url 'eliminar_cliente' dato.id %}" class="btn btn-danger" role="button">Borrar</a> </td>
               </tr>
               {% endfor %}
           </tbody>
@@ -36,8 +44,9 @@
     </div>
     <div class="card mt-3">
         <div class="card-body">
-            <h5 class="card-title">Crear Notificaciones</h5>
-            <form action=" {% url 'notificaciones' %} " method="POST">
+            <h5 class="card-title">Crear Clientes</h5>
+            <p>Llenar los siguientes campos con los datos del cliente</p>
+            <form action=" {% url 'clientes' %} " method="POST">
               {% csrf_token %}
 
               {% for campo in formulario %}

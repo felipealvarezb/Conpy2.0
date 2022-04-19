@@ -13,6 +13,4 @@ urlpatterns = [
     path('perfil/',nviews.perfil,name='perfil'), 
     path('notificaciones/',nviews.notificaciones,name='notificaciones',),
     path('eliminar_noti/<int:id>',nviews.eliminar_noti,name='eliminar_noti'),
-
-    path('clientes/',nviews.clientes,name='clientes'),
 ]

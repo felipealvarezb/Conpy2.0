@@ -5,10 +5,10 @@ class Cliente(models.Model):
         ('Cliente', 'Cliente')
     )
     id = models.AutoField(primary_key=True)
-    nombre_cliente=models.TextField(max_length=35,verbose_name='nombre_cliente')
-    cedula_cliente=models.IntegerField (verbose_name='cedula_cliente')
-    correo_cliente=models.TextField(max_length=35,verbose_name='correo_cliente')
-    celular_cliente=models.IntegerField (verbose_name='celular_cliente')
+    nombre_cliente=models.TextField(max_length=35,verbose_name='nombre cliente')
+    cedula_cliente=models.IntegerField (verbose_name='cedula cliente')
+    correo_cliente=models.EmailField(max_length=35,verbose_name='correo cliente')
+    celular_cliente=models.IntegerField (verbose_name='celular cliente')
     
     def __str__(self):
         fila='Nombre: '+self.nombre_cliente+'- Cedula: '+self.cedula_cliente + '- Correo: '+self.cedula_cliente+'- Celular: '+self.celular_cliente

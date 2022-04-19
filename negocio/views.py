@@ -9,6 +9,13 @@ def home(request):
 
 @login_required(login_url="/login/")
 def notificaciones(request):
+    """metodo para crear notificaciones 
+    Args:
+        request (_type_): cuando es llamado
+
+    Returns:
+        pagina: pagina de notificaciones con el dato nuevo
+    """
     msg=None
     datos=Notificacion.objects.all()
     formulario = NotificacionForm(request.POST or None)

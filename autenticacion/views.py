@@ -19,7 +19,7 @@ def login_view(request):
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                mn.check_notificaciones_db()
+                #mn.check_notificaciones_db()
                 return redirect("/")
             else:
                 msg = 'Invalid credentials'
