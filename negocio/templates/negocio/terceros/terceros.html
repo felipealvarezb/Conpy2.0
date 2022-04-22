@@ -7,13 +7,15 @@
     <div class="card mt-3">
         <div class="card-body">
           <h5 class="card-title">Informacion sobre esta pagina:</h5>
-          <p class="card-text">En este espacio podrás ver, agregar, editar y eliminar a tus clientes</p>
-          <p class="card-text">Cada cliente </p>
+          <p class="card-text">En esta pagina podrás ver en una tabla, todos los terceros creados
+            tambien, podras buscar por filto algun tercero en especial, se puede ver dos espacios en donde 
+            si le das click, podras ver especificamente los datos que hay por separado en proveedor y cliente
+          </p>
         </div>
       </div>
     <div class="card mt-3">
       <div class="card-body">
-          <h5 class="card-title">Tabla de Clientes</h5>
+          <h5 class="card-title">Tabla de todos los terceros</h5>
           <table class="table">
               <form action=" {% url 'buscar_dato' %} " method="POST">
                 {% csrf_token %}
@@ -21,6 +23,7 @@
           </form>
             <thead>
               <tr>
+                <th>Tipo</th>
                 <th>Nombre</th>
                 <th>Cedula</th>
                 <th>Correo</th>
@@ -30,12 +33,13 @@
             <tbody>
             {% for dato in datos %}
               <tr>
-                <td>{{ dato.nombre_cliente }}</td>
-                <td>{{ dato.cedula_cliente }}</td>
-                <td>{{ dato.correo_cliente }}</td>
-                <td>{{ dato.celular_cliente }}</td>
+                <td>{{ dato.tipo_tercero }}</td>
+                <td>{{ dato.nombre_tercero }}</td>
+                <td>{{ dato.cedula_tercero }}</td>
+                <td>{{ dato.correo_tercero }}</td>
+                <td>{{ dato.celular_tercero }}</td>
                 <td> <a href="{% url 'editar'%}" class="btn btn-info" role="button">Editar</a> | 
-                  <a href="{% url 'eliminar_cliente' dato.id %}" class="btn btn-danger" role="button">Borrar</a> </td>
+                  <a href="{% url 'eliminar_tercero' dato.id %}" class="btn btn-danger" role="button">Borrar</a> </td>
               </tr>
               {% endfor %}
           </tbody>
@@ -44,24 +48,30 @@
     </div>
     <div class="card mt-3">
         <div class="card-body">
-            <h5 class="card-title">Crear Clientes</h5>
+            <h5 class="card-title">Crear Terceros</h5>
             <p>Llenar los siguientes campos con los datos del cliente</p>
-            <form action=" {% url 'clientes' %} " method="POST">
+            <form action=" {% url 'terceros' %} " method="POST">
               {% csrf_token %}
 
               {% for campo in formulario %}
               <div class="mb-3 col-6">
                 <label for="" class="form-label">{{ campo.label }}: </label>
-                {% if campo.field.widget.input_type  != "text" %}
-                <input
+                {% if campo.field.widget.input_type  == "select" %}
+                <p>{{ campo.field.widget.input_type }}</p>
+
+                <select
                 type="{{ campo.field.widget.input_type  }}"
                 name="{{ campo.name }}" 
-                id="" 
+                id="tipo" 
                 placeholder="{{ campo.label }}"
-                class="form-control" />
+                class="form-control" default="SELECCIONAR">
+                <option value="SELECCIONAR">SELECCIONAR</option>
+                <option value="PROVEEDOR">PROVEEDOR</option>
+                <option value="CLIENTE">CLIENTE</option>
+                </select>
                 {% else %} 
                 <input
-                type="date"
+                type="{{ campo.field.widget.input_type  }}"
                 name="{{ campo.name }}" 
                 id="" 
                 placeholder="{{ campo.label }}"

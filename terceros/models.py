@@ -4,8 +4,9 @@ class Tercero(models.Model):
     options = (
         ('Tercero', 'Tercero')
     )
+    TIPOS_TERCERO=(('proveedor','PROVEEDOR'),('cliente','CLIENTE'),)
     id = models.AutoField(primary_key=True)
-    tipo_tercero=models.TextField(max_length=35,verbose_name='tipo tercero')
+    tipo_tercero=models.CharField (max_length=10,choices=TIPOS_TERCERO,default='CLIENTE' ,verbose_name='tipo tercero')
     nombre_tercero=models.TextField(max_length=35,verbose_name='nombre tercero')
     cedula_tercero=models.IntegerField (verbose_name='cedula tercero')
     correo_tercero=models.EmailField(max_length=35,verbose_name='correo tercero')

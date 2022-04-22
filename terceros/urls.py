@@ -3,6 +3,6 @@ from .views import *
 from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
-    path('terceros/',clientes,name='terceros'),
-
+    path('terceros/',terceros,name='terceros'),
+    path('eliminar-tercero/<int:id>',eliminar_tercero,name='eliminar_tercero')
 ]
