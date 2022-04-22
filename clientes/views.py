@@ -27,22 +27,24 @@ def eliminar(request, id):
 def buscar_dato(request):
     ingreso=request.POST.get('busqueda')
     try:
-        dato=int(ingreso)
+        #dato=int(ingreso)
         p= Cliente.objects.values_list('cedula_cliente','celular_cliente')
-        for j in range(len(p)):
-            datos=Cliente.objects.filter(cedula_cliente=ingreso)
-            
-            datos=Cliente.objects.filter(celular_cliente=ingreso)
-
+        
+        for i in range(len(p)):
+            for j in p:
+                print(j, ' este es j')
+                if Cliente.objects.filter(cedula_cliente=dato) !=[]:
+                    print('es una cedula la que se introdujo') 
+                elif Cliente.objects.filter(celular_cliente=dato)!=[]:
+                    print('se introdujo un celular')
+                else:
+                    print('no es nada')
+                
     except:
         dato=str(ingreso)
         p= Cliente.objects.values_list('nombre_cliente','correo_cliente')
-    
-
-    for j in range(len(p)): #mejorar la complejidad
-        pass
-    
+    print(type(dato))
+    datos=Cliente.objects.filter(cedula_cliente=dato)
     msg=None
-    #datos=Cliente.objects.filter(cedula_cliente=ingreso)
     formulario=ClienteForm(request.POST or None)
     return render(request,'negocio/clientes.html',{'datos':datos,'formulario':formulario,'msg':msg})
