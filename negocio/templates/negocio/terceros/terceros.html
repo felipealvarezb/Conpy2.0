@@ -1,0 +1,83 @@
+{% extends 'negocio/base.html' %}
+{% block content %}
+<div class="container">
+    <div class="header">
+        <h1>Terceros</h1>
+    </div>
+    <div class="card mt-3">
+        <div class="card-body">
+          <h5 class="card-title">Informacion sobre esta pagina:</h5>
+          <p class="card-text">En este espacio podrás ver, agregar, editar y eliminar a tus clientes</p>
+          <p class="card-text">Cada cliente </p>
+        </div>
+      </div>
+    <div class="card mt-3">
+      <div class="card-body">
+          <h5 class="card-title">Tabla de Clientes</h5>
+          <table class="table">
+              <form action=" {% url 'buscar_dato' %} " method="POST">
+                {% csrf_token %}
+              <input type="text" placeholder="buscar" name="busqueda"><button class="btn" type="submit"><i class="fas fa-search"></i></button>
+          </form>
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Cedula</th>
+                <th>Correo</th>
+                <th>Celular</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for dato in datos %}
+              <tr>
+                <td>{{ dato.nombre_cliente }}</td>
+                <td>{{ dato.cedula_cliente }}</td>
+                <td>{{ dato.correo_cliente }}</td>
+                <td>{{ dato.celular_cliente }}</td>
+                <td> <a href="{% url 'editar'%}" class="btn btn-info" role="button">Editar</a> | 
+                  <a href="{% url 'eliminar_cliente' dato.id %}" class="btn btn-danger" role="button">Borrar</a> </td>
+              </tr>
+              {% endfor %}
+          </tbody>
+          </table>
+      </div>
+    </div>
+    <div class="card mt-3">
+        <div class="card-body">
+            <h5 class="card-title">Crear Clientes</h5>
+            <p>Llenar los siguientes campos con los datos del cliente</p>
+            <form action=" {% url 'clientes' %} " method="POST">
+              {% csrf_token %}
+
+              {% for campo in formulario %}
+              <div class="mb-3 col-6">
+                <label for="" class="form-label">{{ campo.label }}: </label>
+                {% if campo.field.widget.input_type  != "text" %}
+                <input
+                type="{{ campo.field.widget.input_type  }}"
+                name="{{ campo.name }}" 
+                id="" 
+                placeholder="{{ campo.label }}"
+                class="form-control" />
+                {% else %} 
+                <input
+                type="date"
+                name="{{ campo.name }}" 
+                id="" 
+                placeholder="{{ campo.label }}"
+                class="form-control" />
+                {% endif %}
+              </div>
+              <div class="col-12 help-text">{{ campo.errors }}</div>
+              {% endfor %}
+
+              <input type="submit" value="Registrar" class="btn btn-success">
+            </form>
+        </div>
+    </div>
+    {% if msg %}
+    <p>{{ msg }}</p>
+    {% else %}
+    {% endif %}
+</div>
+{% endblock %}
