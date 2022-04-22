@@ -1,0 +1,74 @@
+{% extends 'negocio/base.html' %}
+{% block content %}
+<div class="container">
+    <div class="header">
+        <h1>NOTIFICACIONES</h1>
+    </div>
+    <div class="card mt-3">
+        <div class="card-body">
+          <h5 class="card-title">Informacion sobre esta pagina:</h5>
+          <p class="card-text">En este espacio podrás agregar, editar o eliminar notificaciones/tareas que tienes.</p>
+          <p class="card-text">Cuando esta fecha esté por acercarse, se te notificará por medio de coreo electronico y tambien se mostrará un mensaje en la pagina</p>
+        </div>
+      </div>
+    <div class="card mt-3">
+      <div class="card-body">
+          <h5 class="card-title">Tabla de Notificaciones</h5>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Descripcion</th>
+                <th>Fecha Limite</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for dato in datos %}
+              <tr>
+                <td>{{ dato.descripcion }}</td>
+                <td>{{ dato.fecha_lim }}</td>
+                <td> <a href="{% url 'editar'%}" class="btn btn-info" role="button">Editar</a> | 
+                  <a href="{% url 'eliminar_noti' dato.id %}" class="btn btn-danger" role="button">Borrar</a> </td>
+              </tr>
+              {% endfor %}
+          </tbody>
+          </table>
+      </div>
+    </div>
+    <div class="card mt-3">
+        <div class="card-body">
+            <h5 class="card-title">Crear Notificaciones</h5>
+            <form action=" {% url 'notificaciones' %} " method="POST">
+              {% csrf_token %}
+
+              {% for campo in formulario %}
+              <div class="mb-3 col-6">
+                <label for="" class="form-label">{{ campo.label }}: </label>
+                {% if campo.field.widget.input_type  != "text" %}
+                <input
+                type="{{ campo.field.widget.input_type  }}"
+                name="{{ campo.name }}" 
+                id="" 
+                placeholder="{{ campo.label }}"
+                class="form-control" />
+                {% else %} 
+                <input
+                type="date"
+                name="{{ campo.name }}" 
+                id="" 
+                placeholder="{{ campo.label }}"
+                class="form-control" />
+                {% endif %}
+              </div>
+              <div class="col-12 help-text">{{ campo.errors }}</div>
+              {% endfor %}
+
+              <input type="submit" value="Registrar" class="btn btn-success">
+            </form>
+        </div>
+    </div>
+    {% if msg %}
+    <p>{{ msg }}</p>
+    {% else %}
+    {% endif %}
+</div>
+{% endblock %}

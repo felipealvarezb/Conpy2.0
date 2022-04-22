@@ -21,4 +21,6 @@ from negocio import views as nviews
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('negocio.urls')),
+    path('',include('autenticacion.urls')),
+    path('',include('clientes.urls')),
 ]
