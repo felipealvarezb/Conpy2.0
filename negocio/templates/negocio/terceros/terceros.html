@@ -15,12 +15,19 @@
       </div>
     <div class="card mt-3">
       <div class="card-body">
+          
+            {% if volver %}
+            <h5 class="card-title">Resultados de busqueda</h5>
+          <table class="table">
+          <a href="{% url 'terceros'%}" class="btn btn-info" role="button"><i class="fas fa-angle-left"></i></i>volver</a>
+          {% else %}
           <h5 class="card-title">Tabla de todos los terceros</h5>
           <table class="table">
               <form action=" {% url 'buscar_dato' %} " method="POST">
                 {% csrf_token %}
               <input type="text" placeholder="buscar" name="busqueda"><button class="btn" type="submit"><i class="fas fa-search"></i></button>
           </form>
+          {% endif %}
             <thead>
               <tr>
                 <th>Tipo</th>
@@ -31,6 +38,7 @@
               </tr>
             </thead>
             <tbody>
+
             {% for dato in datos %}
               <tr>
                 <td>{{ dato.tipo_tercero }}</td>
@@ -46,6 +54,15 @@
           </table>
       </div>
     </div>
+    {% if volver %}
+    {% else %}
+          
+    <div class="card mt-3">
+      <div class="card-body">
+        <p>Si quieres ver mas Informacion acerca de tus clientes:</p>
+        <button type="button" class="btn btn-primary">Clientes</button>
+      </div>
+    </div>
     <div class="card mt-3">
         <div class="card-body">
             <h5 class="card-title">Crear Terceros</h5>
@@ -57,17 +74,16 @@
               <div class="mb-3 col-6">
                 <label for="" class="form-label">{{ campo.label }}: </label>
                 {% if campo.field.widget.input_type  == "select" %}
-                <p>{{ campo.field.widget.input_type }}</p>
-
                 <select
                 type="{{ campo.field.widget.input_type  }}"
                 name="{{ campo.name }}" 
-                id="tipo" 
+                id="" 
                 placeholder="{{ campo.label }}"
                 class="form-control" default="SELECCIONAR">
+                
                 <option value="SELECCIONAR">SELECCIONAR</option>
-                <option value="PROVEEDOR">PROVEEDOR</option>
-                <option value="CLIENTE">CLIENTE</option>
+                <option value="proveedor">PROVEEDOR</option>
+                <option value="cliente">CLIENTE</option>
                 </select>
                 {% else %} 
                 <input
@@ -88,6 +104,7 @@
     {% if msg %}
     <p>{{ msg }}</p>
     {% else %}
+    {% endif %}
     {% endif %}
 </div>
 {% endblock %}
