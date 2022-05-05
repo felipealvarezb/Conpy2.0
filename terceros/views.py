@@ -2,7 +2,9 @@ from django.shortcuts import render
 from .models import Tercero
 from .forms import TerceroForm
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 
+@login_required(login_url="/login/")
 def terceros(request):
     msg=None
     datos=Tercero.objects.all()
