@@ -25,8 +25,10 @@ def eliminar_tercero(request, id):
 def buscar_dato(request):
     volver=None
     ingreso=request.POST.get('busqueda')
+    print (ingreso)
     try:
         dato=int(ingreso)
+        print('entro a numero')
         p= Tercero.objects.values_list('cedula_tercero','celular_tercero')
         for i in p:
             if i[0]==dato:
@@ -41,13 +43,13 @@ def buscar_dato(request):
                 
             else:
                 print('no vi nada')         
-    except:
+    except ValueError:
         dato=str(ingreso)
         p= Tercero.objects.values_list('tipo_tercero','nombre_tercero','correo_tercero')
         for i in p:
             if i[0]==dato:
                 print('es de tipo') 
-                datos=Tercero.objects.filter(cedula_tercero=dato)
+                datos=Tercero.objects.filter(tipo_tercero=dato)
                 volver='a'
                 
             elif i[1]==dato:
@@ -62,4 +64,6 @@ def buscar_dato(request):
                 
             else:
                 print('no vi nada') 
+    
+    
     return render(request,'negocio/terceros/terceros.html',{'datos':datos,'volver':volver})
