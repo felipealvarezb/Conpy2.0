@@ -42,7 +42,9 @@ def buscar_dato(request):
                 volver='a'
                 
             else:
-                print('no vi nada')         
+                print('no vi nada') 
+                volver='a'   
+                no_esta='no'     
     except ValueError:
         dato=str(ingreso)
         p= Tercero.objects.values_list('tipo_tercero','nombre_tercero','correo_tercero')
@@ -64,6 +66,9 @@ def buscar_dato(request):
                 
             else:
                 print('no vi nada') 
-    
-    
-    return render(request,'negocio/terceros/terceros.html',{'datos':datos,'volver':volver})
+                volver='a'
+                no_esta='no'
+    try:
+        return render(request,'negocio/terceros/terceros.html',{'datos':datos,'volver':volver})
+    except UnboundLocalError:
+        return render(request,'negocio/terceros/terceros.html',{'volver':volver,'esta':no_esta})

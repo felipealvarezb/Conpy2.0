@@ -23,9 +23,15 @@
       <div class="card-body">
           
             {% if volver %}
-            <h5 class="card-title">Resultados de busqueda</h5>
-          <table class="table">
-          <a href="{% url 'terceros'%}" class="btn btn-info" role="button"><i class="fas fa-angle-left"></i></i>volver</a>
+            <h5 >Resultados de busqueda</h5>
+            <a href="{% url 'terceros'%}" class="btn btn-info" role="button"><i class="fas fa-angle-left"></i></i>volver</a>
+            <table class="table">
+              {% if esta %}
+                <h5>NO SE PUDO ENCONTRAR UN RESULTADO PARA TU BUSQUEDA</h5>
+              
+                {% else %}
+              {% endif %}
+            
           {% else %}
           <h5 class="card-title">Tabla de todos los terceros</h5>
           <table class="table">
