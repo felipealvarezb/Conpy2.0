@@ -28,21 +28,17 @@ def buscar_dato(request):
     print (ingreso)
     try:
         dato=int(ingreso)
-        print('entro a numero')
         p= Tercero.objects.values_list('cedula_tercero','celular_tercero')
         for i in p:
             if i[0]==dato:
-                print('es una cedula') 
                 datos=Tercero.objects.filter(cedula_tercero=dato)
                 volver='a'
                 
             elif i[1]==dato:
-                print('es un celularrrrr')
                 datos=Tercero.objects.filter(celular_tercero=dato)
                 volver='a'
                 
             else:
-                print('no vi nada') 
                 volver='a'   
                 no_esta='no'     
     except ValueError:
@@ -50,22 +46,18 @@ def buscar_dato(request):
         p= Tercero.objects.values_list('tipo_tercero','nombre_tercero','correo_tercero')
         for i in p:
             if i[0]==dato:
-                print('es de tipo') 
                 datos=Tercero.objects.filter(tipo_tercero=dato)
                 volver='a'
                 
             elif i[1]==dato:
-                print('es un nombre')
                 datos=Tercero.objects.filter(nombre_tercero=dato)
                 volver='a'
                 
             elif i[2]==dato:
-                print('es un correo')
                 datos=Tercero.objects.filter(correo_tercero=dato)
                 volver='a'
                 
             else:
-                print('no vi nada') 
                 volver='a'
                 no_esta='no'
     try:
