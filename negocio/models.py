@@ -13,7 +13,7 @@ class Dato(models.Model):
     descripcion = models.TextField(max_length=200,  verbose_name='Descripcion')
     
     def __str__(self):
-        fila = "Movimiento: " + self.movimiento +"-"+ "Descripcion: " + self.descripcion
+        fila = "Movimiento: " + self.movimiento +" - "+ "Valor: " + str(self.valor)
         return fila
     
 class Notificacion(models.Model):
@@ -25,5 +25,5 @@ class Notificacion(models.Model):
     fecha_lim = models.DateField(verbose_name='Fecha_lim')
 
     def __str__(self):
-        fila='Descripcion: '+self.descripcion + '-' + 'Fecha_Limite: '+ self.fecha_lim
+        fila='Descripcion: '+self.descripcion + ' -' + 'Fecha_Limite: '+ self.fecha_lim
         return fila
