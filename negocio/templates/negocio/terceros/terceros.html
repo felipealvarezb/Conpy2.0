@@ -34,10 +34,33 @@
             
           {% else %}
           <h5 class="card-title">Tabla de todos los terceros</h5>
+          
           <table class="table">
               <form action=" {% url 'buscar_dato' %} " method="POST">
                 {% csrf_token %}
-              <input type="text" placeholder="buscar" name="busqueda"><button class="btn" type="submit"><i class="fas fa-search"></i></button>
+                <select class="dropdown-menu" name = "Filtro" >
+                  <option value="TIPO">FILTRO</option>
+                  <option  class="dropdown-item" value="NOMBRE">NOMBRE</option>
+                  <option class="dropdown-item" value="CEDULA">CEDULA</option>
+                  <option class="dropdown-item" value="CORREO">CORREO</option>
+                  <option class="dropdown-item" value="CELULAR">CELULAR</option>
+                  
+             </select>
+             
+              <input type="text" placeholder="buscar" name="busqueda"><button class="btn" type="submit">
+            
+    
+                <!--
+                <select>
+                  <option value="TIPO">TIPO</option>
+                  <option value="NOMBRE">NOMBRE</option>
+                  <option value="CEDULA">CEDULA</option>
+                  <option value="CORREO">CORREO</option>
+                  <option value="CELULAR">CELULAR</option>
+                  <i class="fas fa-bars-filter"></i>
+                </select>
+              -->
+                <i class="fas fa-search"></i></button>
           </form>
           {% endif %}
             <thead>
@@ -68,13 +91,14 @@
     </div>
     {% if volver %}
     {% else %}
-          
+    <!-- 
     <div class="card mt-3">
       <div class="card-body">
         <p>Si quieres ver mas Informacion acerca de tus clientes:</p>
         <button type="button" class="btn btn-primary">Clientes</button>
       </div>
     </div>
+    -->
     <div class="card mt-3">
         <div class="card-body">
             <h5 class="card-title">Crear Terceros</h5>
