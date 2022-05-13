@@ -11,7 +11,7 @@
           <table class="table">
               <thead>
                 <tr>
-                  <th>Fecha</th>
+                <!--<th>Fecha</th>-->
                   <th>Movimiento</th>
                   <th>Valor</th>
                   <th>Descripcion</th>
@@ -20,7 +20,7 @@
               <tbody>
                 {% for dato in datos%}
                 <tr>
-                  <td>{{ dato.id }}</td>
+                  <!--<td>{{ dato.id }}</td>-->
                   <td>{{ dato.movimiento }}</td>
                   <td> ${{ dato.valor }}</td>
                   <td>{{ dato.descripcion }}</td>
@@ -32,9 +32,9 @@
             </table>
       </div>
     </div>
-    <div class="card mt-3">
-        <div class="card-body">
-            <h5 class="card-title">Registro ingresos / gastos</h5>
+    <div class="col-6 card mt-3">
+      <div class="card-body">
+        <h5 class="card-title">Registro ingresos / gastos</h5>
             <form action="" method="POST">
               {% csrf_token %}
               {% for campo in formulario %}
@@ -47,12 +47,19 @@
                 placeholder="{{ campo.label }}"
                 class="form-control" />
               </div>
-              <div class="col-12 help-text">{{ campo.errors }}</div>
+              <div class="col-6 help-text">{{ campo.errors }}</div>
               {% endfor %}
 
               <input type="submit" value="Registrar" class="btn btn-success">
             </form>
-        </div>
+      </div>
+    </div>
+    <div class="col-6 card mt-3">
+      <div class="card-body">
+        <h5 class="card-title">Total ingresos / gastos</h5>
+        <p>Total ingresos: {{sumi}}</p>
+        <p>Total gastos: {{sumg}}</p>
+      </div>
     </div>
 </div>
 

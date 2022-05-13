@@ -1,3 +1,4 @@
+from typing import List
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Dato, Notificacion
@@ -35,9 +36,20 @@ def perfil(request):
 def ingresos(request):
     datos = Dato.objects.all()
     formulario = DatoForm(request.POST or None) 
+    
+    totalIngresos = list(Dato.objects.filter(movimiento='Ingreso').values())
+    totalGastos = list(Dato.objects.filter(movimiento='Gasto').values())
+    sumi = 0
+    sumg = 0
+    for valuei in totalIngresos:
+        sumi = sumi + valuei['valor']
+    
+    for valueg in totalGastos:
+        sumg = sumg + valueg['valor']
+        
     if formulario.is_valid():
         formulario.save()
-    return render(request, "negocio/crud/ingresos.html", {'datos': datos, 'formulario': formulario})
+    return render(request, "negocio/crud/ingresos.html", {'datos': datos, 'formulario': formulario, 'sumi': sumi, 'sumg': sumg})
 
 @login_required(login_url="/login/")
 def editar(request):

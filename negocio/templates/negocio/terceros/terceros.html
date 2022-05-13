@@ -1,0 +1,145 @@
+{% extends 'negocio/base.html' %}
+{% block content %}
+<div class="container">
+    <div class="header">
+        <h1>Terceros</h1>
+    </div>
+    <!--<label>
+      <span class="title">Confusing thing here</span>
+      
+      <a class="info" data-toggle="popover" data-placement="right" data-content="This is the helpful information that will appear to help users along their way. They'll love it." title="" data-original-title="Help here">Info</a>
+      
+    </label>-->
+    <div class="card mt-3">
+        <div class="card-body">
+          <h5 class="card-title">Informacion sobre esta pagina:</h5>
+          <p class="card-text">En esta pagina podrás ver en una tabla, todos los terceros creados
+            tambien, podras buscar por filto algun tercero en especial, se puede ver dos espacios en donde 
+            si le das click, podras ver especificamente los datos que hay por separado en proveedor y cliente
+          </p>
+        </div>
+      </div>
+    <div class="card mt-3">
+      <div class="card-body">
+          
+            {% if volver %}
+            <h5 >Resultados de busqueda</h5>
+            <a href="{% url 'terceros'%}" class="btn btn-info" role="button"><i class="fas fa-angle-left"></i></i>volver</a>
+            <table class="table">
+              {% if esta %}
+                <h5>NO SE PUDO ENCONTRAR UN RESULTADO PARA TU BUSQUEDA</h5>
+              
+                {% else %}
+              {% endif %}
+            
+          {% else %}
+          <h5 class="card-title">Tabla de todos los terceros</h5>
+          
+          <table class="table">
+              <form action=" {% url 'buscar_dato' %} " method="POST">
+                {% csrf_token %}
+                <select class="dropdown-menu" name = "Filtro" >
+                  <option value="TIPO">FILTRO</option>
+                  <option  class="dropdown-item" value="NOMBRE">NOMBRE</option>
+                  <option class="dropdown-item" value="CEDULA">CEDULA</option>
+                  <option class="dropdown-item" value="CORREO">CORREO</option>
+                  <option class="dropdown-item" value="CELULAR">CELULAR</option>
+                  
+             </select>
+             
+              <input type="text" placeholder="buscar" name="busqueda"><button class="btn" type="submit">
+            
+    
+                <!--
+                <select>
+                  <option value="TIPO">TIPO</option>
+                  <option value="NOMBRE">NOMBRE</option>
+                  <option value="CEDULA">CEDULA</option>
+                  <option value="CORREO">CORREO</option>
+                  <option value="CELULAR">CELULAR</option>
+                  <i class="fas fa-bars-filter"></i>
+                </select>
+              -->
+                <i class="fas fa-search"></i></button>
+          </form>
+          {% endif %}
+            <thead>
+              <tr>
+                <th>Tipo</th>
+                <th>Nombre</th>
+                <th>Cedula</th>
+                <th>Correo</th>
+                <th>Celular</th>
+              </tr>
+            </thead>
+            <tbody>
+
+            {% for dato in datos %}
+              <tr>
+                <td>{{ dato.tipo_tercero }}</td>
+                <td>{{ dato.nombre_tercero }}</td>
+                <td>{{ dato.cedula_tercero }}</td>
+                <td>{{ dato.correo_tercero }}</td>
+                <td>{{ dato.celular_tercero }}</td>
+                <td> <a href="{% url 'editar'%}" class="btn btn-info" role="button">Editar</a> | 
+                  <a href="{% url 'eliminar_tercero' dato.id %}" class="btn btn-danger" role="button">Borrar</a> </td>
+              </tr>
+              {% endfor %}
+          </tbody>
+          </table>
+      </div>
+    </div>
+    {% if volver %}
+    {% else %}
+          
+    <div class="card mt-3">
+      <div class="card-body">
+        <p>Si quieres ver mas Informacion acerca de tus clientes:</p>
+        <button type="button" class="btn btn-primary">Clientes</button>
+      </div>
+    </div>
+    <div class="card mt-3">
+        <div class="card-body">
+            <h5 class="card-title">Crear Terceros</h5>
+            <p>Llenar los siguientes campos con los datos del cliente</p>
+            <form action=" {% url 'terceros' %} " method="POST">
+              {% csrf_token %}
+
+              {% for campo in formulario %}
+              <div class="mb-3 col-6">
+                <label for="" class="form-label">{{ campo.label }}: </label>
+                {% if campo.field.widget.input_type  == "select" %}
+                <select
+                type="{{ campo.field.widget.input_type  }}"
+                name="{{ campo.name }}" 
+                id="" 
+                placeholder="{{ campo.label }}"
+                class="form-control" default="SELECCIONAR">
+                
+                <option value="SELECCIONAR">SELECCIONAR</option>
+                <option value="proveedor">PROVEEDOR</option>
+                <option value="cliente">CLIENTE</option>
+                </select>
+                {% else %} 
+                <input
+                type="{{ campo.field.widget.input_type  }}"
+                name="{{ campo.name }}" 
+                id="" 
+                placeholder="{{ campo.label }}"
+                class="form-control" />
+                {% endif %}
+              </div>
+              <div class="col-12 help-text">{{ campo.errors }}</div>
+              {% endfor %}
+
+              <input type="submit" value="Registrar" class="btn btn-success">
+            </form>
+        </div>
+    </div>
+    {% if msg %}
+    <p>{{ msg }}</p>
+    {% else %}
+    {% endif %}
+    {% endif %}
+</div>
+{% endblock %}

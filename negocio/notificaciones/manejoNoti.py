@@ -8,7 +8,7 @@ from negocio.forms import DatoForm, NotificacionForm
 def enviar_mail_nueva_noti(descripcion,fecha_lim):
     mensaje='Se ha creado una tarea con la siguiente descripcion:\n"'+descripcion+'"\nTiene como fecha limite:\n'+fecha_lim+"\naño/mes/dia"
     send_mail(
-        'Nueva Tarea',
+        'Se ha creado una tarea nueva',
         mensaje,
         settings.EMAIL_HOST_USER,
         ['jjsanchez1@hotmail.com'],
@@ -18,13 +18,16 @@ def enviar_mail_fecha_cercana(descripcion,fecha_lim):
     fecha_limi=fecha_lim.strftime('%m/%d/%Y')
     #print(fecha_limi,'fecha enviar mail ')
     mensaje='Se acerca la fecha limite para la siguiente tarea:\n"'+descripcion+'"\nTiene como fecha limite:\n'+fecha_limi+"\nmes/dia/año"
-    send_mail(
+    try:
+        send_mail(
         'Tarea proxima en llegar al limite',
         mensaje,
         settings.EMAIL_HOST_USER,
-        ['jjsanchez1@hotmail.com'],
-    )
-    print('mandé correo')
+        ['Conpyp1@gmail.com','jjsanchezps@outlook.com'],
+        )      
+        print('mandé correo')
+    except:
+        print('hubo un error')
 
 def fecha_cercana(descripcion,fecha):
     fecha_caducada=None
