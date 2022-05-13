@@ -8,7 +8,7 @@ class Tercero(models.Model):
     id = models.AutoField(primary_key=True)
     tipo_tercero=models.CharField ( max_length=10,choices=TIPOS_TERCERO,default='CLIENTE' ,verbose_name='tipo tercero')
     nombre_tercero=models.TextField(max_length=35,verbose_name='nombre tercero')
-    cedula_tercero=models.IntegerField (validators=[RegexValidator(regex='^.{10}$', message='El celular debe de tener 10 numeros', code='nomatch')],verbose_name='cedula tercero')
+    cedula_tercero=models.IntegerField (verbose_name='cedula tercero')
     correo_tercero=models.EmailField(max_length=35,verbose_name='correo tercero')
     celular_tercero=models.IntegerField (validators=[RegexValidator(regex='^.{10}$', message='El celular debe de tener 10 numeros', code='nomatch')],verbose_name='celular tercero')
     
