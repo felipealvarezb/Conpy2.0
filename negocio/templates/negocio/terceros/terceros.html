@@ -10,6 +10,16 @@
       <a class="info" data-toggle="popover" data-placement="right" data-content="This is the helpful information that will appear to help users along their way. They'll love it." title="" data-original-title="Help here">Info</a>
       
     </label>-->
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Dropdown button (que podemos agregar a la parte de filtros, No se como funciona)
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="#">Action</a>
+        <a class="dropdown-item" href="#">Another action</a>
+        <a class="dropdown-item" href="#">Something else here</a>
+      </div>
+    </div>
     <div class="card mt-3">
         <div class="card-body">
           <h5 class="card-title">Informacion sobre esta pagina:</h5>
@@ -38,28 +48,18 @@
           <table class="table">
               <form action=" {% url 'buscar_dato' %} " method="POST">
                 {% csrf_token %}
-                <select class="dropdown-menu" name = "Filtro" >
-                  <option value="TIPO">FILTRO</option>
-                  <option  class="dropdown-item" value="NOMBRE">NOMBRE</option>
-                  <option class="dropdown-item" value="CEDULA">CEDULA</option>
-                  <option class="dropdown-item" value="CORREO">CORREO</option>
-                  <option class="dropdown-item" value="CELULAR">CELULAR</option>
+                <select  name = "filtro">
+                  <option value="TIPO">FILTRAR POR <i class="fas fa-bars"></i></option>
+                  <option  class="dropdown-item" value="tipo_tercero">TIPO</option>
+                  <option  class="dropdown-item" value="nombre_tercero">NOMBRE</option>
+                  <option class="dropdown-item" value="cedula_tercero">CEDULA</option>
+                  <option class="dropdown-item" value="correo_tercero">CORREO</option>
+                  <option class="dropdown-item" value="celular_tercero">CELULAR</option>
                   
-             </select>
+             </select><i class="fas fa-bars"></i>
              
               <input type="text" placeholder="buscar" name="busqueda"><button class="btn" type="submit">
             
-    
-                <!--
-                <select>
-                  <option value="TIPO">TIPO</option>
-                  <option value="NOMBRE">NOMBRE</option>
-                  <option value="CEDULA">CEDULA</option>
-                  <option value="CORREO">CORREO</option>
-                  <option value="CELULAR">CELULAR</option>
-                  <i class="fas fa-bars-filter"></i>
-                </select>
-              -->
                 <i class="fas fa-search"></i></button>
           </form>
           {% endif %}
@@ -81,7 +81,7 @@
                 <td>{{ dato.cedula_tercero }}</td>
                 <td>{{ dato.correo_tercero }}</td>
                 <td>{{ dato.celular_tercero }}</td>
-                <td> <a href="{% url 'editar'%}" class="btn btn-info" role="button">Editar</a> | 
+                <td> <a href="{% url 'editar'%}" class="btn btn-info" role="button">Editar</a>
                   <a href="{% url 'eliminar_tercero' dato.id %}" class="btn btn-danger" role="button">Borrar</a> </td>
               </tr>
               {% endfor %}
@@ -108,7 +108,7 @@
 
               {% for campo in formulario %}
               <div class="mb-3 col-6">
-                <label for="" class="form-label">{{ campo.label }}: </label>
+                <label for="" class="form-label">{{ campo.label }}: (OBLIGATORIO) </label>
                 {% if campo.field.widget.input_type  == "select" %}
                 <select
                 type="{{ campo.field.widget.input_type  }}"

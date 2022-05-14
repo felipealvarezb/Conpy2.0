@@ -8,7 +8,6 @@ from django.contrib.auth.decorators import login_required
 def terceros(request):
     msg=None
     datos=Tercero.objects.all()
-    Mayusculas=request.POST
     formulario=TerceroForm(request.POST or None)
     if formulario.is_valid():
         try:
@@ -18,7 +17,7 @@ def terceros(request):
             msg='Hubo un error al momento de crear un cliente'
     return render(request,'negocio/terceros/terceros.html',{'datos':datos,'formulario':formulario,'msg':msg})
 
-def eliminar_tercero(request, id):
+def eliminar_tercero(id):
     datos = Tercero.objects.get(id=id)
     datos.delete()
     return redirect('terceros')
@@ -27,45 +26,29 @@ def buscar_dato(request):
     volver=None #variable para definir si la pagina tiene el boton de volver o no
     no_esta=None #variable para definir si se abre la pagina de no se encontró alguna busqueda, si es != de None no se encontró algo 
     ingreso=request.POST.get('busqueda')
-    print(ingreso)
-    if ingreso!=' ':
-
-        try:
-            dato=int(ingreso)
-            p= Tercero.objects.values_list('cedula_tercero','celular_tercero')
-            for i in p:
-                if Tercero.objects.filter(cedula_tercero__icontains=dato):
-                    datos=Tercero.objects.filter(cedula_tercero__icontains=dato)
-                    volver='a'
-                    
-                elif Tercero.objects.filter(celular_tercero__icontains=dato):
-                    datos=Tercero.objects.filter(celular_tercero__icontains=dato)
-                    volver='a' 
-                    
-                else:
-                    volver='a'   
-                    no_esta='no'     
-        except ValueError:
-            dato=str(ingreso)
-            p= Tercero.objects.values_list('tipo_tercero','nombre_tercero','correo_tercero')
-            for i in p:
-                if Tercero.objects.filter(tipo_tercero__icontains=dato):
-                    datos=Tercero.objects.filter(tipo_tercero__icontains=dato)
-                    volver='a'
-                    
-                elif Tercero.objects.filter(nombre_tercero__icontains=dato):
-
-                    datos=Tercero.objects.filter(nombre_tercero__icontains=dato)
-                    print('lo contiene')
-                    volver='a'
-                    
-                elif Tercero.objects.filter(correo_tercero__icontains=dato):
-                    datos=Tercero.objects.filter(correo_tercero__icontains=dato)
-                    volver='a'
-                    
-                else:
-                    volver='a'
+    tipo=request.POST.get('filtro')
+    if ingreso!=' ' and tipo!='TIPO':
+        p=Tercero.objects.values_list(tipo)
+        print(p)
+        for i in p:
+            try:
+                a=int(ingreso)
+                if tipo=='cedula_tercero' and Tercero.objects.filter(cedula_tercero__icontains=a):
+                    datos=Tercero.objects.filter(cedula_tercero__icontains=a)
+                elif tipo=='celular_tercero' and Tercero.objects.filter(celular_tercero__icontains=a):
+                    datos=Tercero.objects.filter(celular_tercero__icontains=a)
+                else:  
                     no_esta='no'
+            except ValueError:
+                if tipo=='tipo_tercero' and Tercero.objects.filter(tipo_tercero__icontains=ingreso):
+                    datos=Tercero.objects.filter(tipo_tercero__icontains=ingreso)
+                elif tipo=='nombre_tercero' and Tercero.objects.filter(nombre_tercero__icontains=ingreso):
+                    datos=Tercero.objects.filter(nombre_tercero__icontains=ingreso)
+                elif tipo=='correo_tercero' and Tercero.objects.filter(correo_tercero__icontains=ingreso):
+                    datos=Tercero.objects.filter(correo_tercero__icontains=ingreso)
+                else:  
+                    no_esta='no'
+            volver='a'
         try:
             return render(request,'negocio/terceros/terceros.html',{'datos':datos,'volver':volver})
         except UnboundLocalError:
