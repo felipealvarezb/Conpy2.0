@@ -3,7 +3,7 @@
 
 <div class="container">
     <div class="header">
-        <h1>Ingresos del negocio</h1>
+        <h1>Movimientos del negocio</h1>
     </div>
     <div class="card mt-3">
       <div class="card-body">
@@ -13,6 +13,7 @@
                 <tr>
                 <!--<th>Fecha</th>-->
                   <th>Movimiento</th>
+                  <th>Nombre Tercero</th>
                   <th>Valor</th>
                   <th>Descripcion</th>
                 </tr>
@@ -22,6 +23,7 @@
                 <tr>
                   <!--<td>{{ dato.id }}</td>-->
                   <td>{{ dato.movimiento }}</td>
+                  <td>{{ dato.nombre_tercero }}</td>
                   <td> ${{ dato.valor }}</td>
                   <td>{{ dato.descripcion }}</td>
                   <td> <a href="{% url 'editar'%}" class="btn btn-info" role="button">Editar</a> | 
@@ -35,6 +37,10 @@
     <div class="card mt-3">
         <div class="card-body">
             <h5 class="card-title">Registro ingresos / gastos</h5>
+            {% if error %}
+              <h4>{{ error }}</h4>
+            {% else %}
+            {% endif %}
             <form action="" method="POST">
               {% csrf_token %}
               {% for campo in formulario %}

@@ -9,6 +9,7 @@ class Dato(models.Model):
     )
     id = models.AutoField(primary_key=True)
     movimiento = models.CharField(max_length=7, choices=options, verbose_name='Movimiento', null=True)
+    nombre_tercero=models.TextField(max_length=35,verbose_name='Tercero',default=None)
     valor = models.FloatField( verbose_name='Valor')
     descripcion = models.TextField(max_length=200,  verbose_name='Descripcion')
     
