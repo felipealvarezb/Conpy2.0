@@ -17,11 +17,13 @@ def terceros(request):
             msg='Hubo un error al momento de crear un cliente'
     return render(request,'negocio/terceros/terceros.html',{'datos':datos,'formulario':formulario,'msg':msg})
 
+@login_required(login_url="/login/")
 def eliminar_tercero(request,id):
     datos = Tercero.objects.get(id=id)
     datos.delete()
     return redirect('terceros')
 
+@login_required(login_url="/login/")
 def buscar_dato(request):
     volver=None #variable para definir si la pagina tiene el boton de volver o no
     no_esta=None #variable para definir si se abre la pagina de no se encontró alguna busqueda, si es != de None no se encontró algo 
