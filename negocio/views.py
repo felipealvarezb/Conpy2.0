@@ -51,25 +51,66 @@ def ingresos(request):
     proveedor=[]
     cliente=[]
     valido=False
-    p=Tercero.objects.values_list('nombre_tercero','tipo_tercero')
-    for i in p:
-        if i[1]=='proveedor':
-            proveedor.append(i[0])
-            print(i[0], 'proveedor')
-        elif i[1]=='cliente':
-            cliente.append(i[0])
+    try:
+        p=Tercero.objects.values_list('nombre_tercero','tipo_tercero')
+        for i in p:
+            if i[1]=='proveedor':
+                proveedor.append(i[0])
+                
+            elif i[1]=='cliente':
+                cliente.append(i[0])
 
-    if request.POST.get('movimiento')=='Gasto' and request.POST.get('nombre_tercero') in proveedor:
-        valido=True
-    elif request.POST.get('movimiento')=='Ingreso' and request.POST.get('nombre_tercero') in cliente:
-        valido=True
-    error=None
-    if formulario.is_valid() and valido==True:
-        formulario.save()
-    else:
-        error='No existe el tercero que ingresaste'
-        print('hubo un error')
-    return render(request, "negocio/crud/ingresos.html", {'datos': datos, 'formulario': formulario, 'sumi': sumi, 'sumg': sumg,'error':error})
+        if request.POST.get('movimiento')=='Gasto' and request.POST.get('nombre_tercero') in proveedor:
+            valido=True
+        elif request.POST.get('movimiento')=='Ingreso' and request.POST.get('nombre_tercero') in cliente:
+            valido=True
+        error=None
+        if formulario.is_valid() and valido==True:
+            formulario.save()
+        return render(request, "negocio/crud/ingresos.html", {'datos': datos, 'formulario': formulario, 'sumi': sumi, 'sumg': sumg,'error':error})
+    
+    except:  
+
+        return render(request, "negocio/crud/ingresos.html", {'datos': datos, 'formulario': formulario, 'sumi': sumi, 'sumg': sumg})
+    
+
+
+@login_required(login_url="/login/")
+def buscar_dato(request):
+    volver=None #variable para definir si la pagina tiene el boton de volver o no
+    no_esta=None #variable para definir si se abre la pagina de no se encontró alguna busqueda, si es != de None no se encontró algo 
+    ingreso=request.POST.get('busqueda')
+    print(ingreso)
+    tipo=request.POST.get('filtro')
+    print(tipo)
+    if ingreso!=' ' and tipo!='TIPO':
+        p=Dato.objects.values_list(tipo)
+        #print(p)
+        for i in p:
+            try:
+                a=float(ingreso)
+                if tipo=='valor' and Dato.objects.filter(valor__icontains=a):
+                    datos=Dato.objects.filter(valor__contains=a)
+                else:  
+                    no_esta='no'
+            except ValueError:
+                if tipo=='nombre_tercero' and Dato.objects.filter(nombre_tercero__icontains=ingreso):
+                    datos=Dato.objects.filter(nombre_tercero__icontains=ingreso)
+                elif tipo=='descripcion' and Dato.objects.filter(descripcion__icontains=ingreso):
+                    datos=Dato.objects.filter(descripcion__icontains=ingreso)
+                elif tipo=='movimiento' and Dato.objects.filter(movimiento__icontains=ingreso):
+                    datos=Dato.objects.filter(movimiento__icontains=ingreso)
+                else:  
+                    no_esta='no'
+            volver='a'
+        try:
+            return render(request,'negocio/crud/ingresos.html',{'datos':datos,'volver':volver})
+        except UnboundLocalError:
+            return render(request,'negocio/crud/ingresos.html',{'volver':volver,'esta':no_esta})
+    else:   
+        volver='a'          
+        no_esta='no'   
+        return render(request,'negocio/terceros/terceros.html',{'volver':volver,'esta':no_esta})
 
 @login_required(login_url="/login/")
 def editar(request):
