@@ -10,7 +10,7 @@
       <a class="info" data-toggle="popover" data-placement="right" data-content="This is the helpful information that will appear to help users along their way. They'll love it." title="" data-original-title="Help here">Info</a>
       
     </label>-->
-    <div class="dropdown">
+    <!--<div class="dropdown">
       <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Dropdown button (que podemos agregar a la parte de filtros, No se como funciona)
       </button>
@@ -19,7 +19,7 @@
         <a class="dropdown-item" href="#">Another action</a>
         <a class="dropdown-item" href="#">Something else here</a>
       </div>
-    </div>
+    </div>-->
     <div class="card mt-3">
         <div class="card-body">
           <h5 class="card-title">Informacion sobre esta pagina:</h5>
@@ -45,7 +45,7 @@
           {% else %}
           <h5 class="card-title">Tabla de todos los terceros</h5>
           
-          <table class="table">
+          <table class="table" style="table-layout: fixed; width: 100%">
               <form action=" {% url 'buscar_dato' %} " method="POST">
                 {% csrf_token %}
                 <select  name = "filtro">
@@ -80,7 +80,11 @@
                 <td>{{ dato.nombre_tercero }}</td>
                 <td>{{ dato.cedula_tercero }}</td>
                 <td>{{ dato.correo_tercero }}</td>
-                <td>{{ dato.celular_tercero }}</td>
+                {% load l10n %}
+                  {% localize off %}
+                  <td>{{ dato.celular_tercero }}</td>
+                  {% endlocalize %}
+                
                 <td> <a href="{% url 'editar'%}" class="btn btn-info" role="button">Editar</a>
                   <a href="{% url 'eliminar_tercero' dato.id %}" class="btn btn-danger" role="button">Borrar</a> </td>
               </tr>

@@ -7,15 +7,45 @@
     </div>
     <div class="card mt-3">
       <div class="card-body">
-          <h5 class="card-title">Registro ingresos / gastos</h5>
-          <table class="table">
+        <h5 class="card-title">Registro ingresos / gastos</h5>
+        <table class="table" style="table-layout: fixed; width: 100%">
+        {% if volver %}
+        <h5 >Resultados de busqueda</h5>
+        <a href="{% url 'ingresos'%}" class="btn btn-info" role="button"><i class="fas fa-angle-left"></i></i>volver</a>
+        <table class="table">
+          {% if esta %}
+            <h5>NO SE PUDO ENCONTRAR UN RESULTADO PARA TU BUSQUEDA</h5>
+          
+            {% else %}
+          {% endif %}
+        
+      {% else %}
+      
+          <form action=" {% url 'buscar_datoM' %} " method="POST">
+            {% csrf_token %}
+            <select  name = "filtro">
+              <option value="TIPO">FILTRAR POR <i class="fas fa-bars"></i></option>
+              <option  class="dropdown-item" value="movimiento">MOVIMIENTO</option>
+              <option class="dropdown-item" value="nombre_tercero">NOMBRE</option>
+              <option class="dropdown-item" value="valor">VALOR</option>
+              <option class="dropdown-item" value="descripcion">DESCRIPCION</option>
+              
+         </select><i class="fas fa-bars"></i>
+         
+          <input type="text" placeholder="buscar" name="busqueda"><button class="btn" type="submit">
+        
+            <i class="fas fa-search"></i></button>
+      </form>
+      {% endif %}
+    
+
               <thead>
                 <tr>
                 <!--<th>Fecha</th>-->
                   <th>Movimiento</th>
                   <th>Nombre Tercero</th>
-                  <th style="width: 200px;">Valor</th>
-                  <th style="width: 200px;">Descripcion</th>
+                  <th style="word-wrap: break-word">Valor</th>
+                  <th style="word-wrap: break-word">Descripcion</th>
                 </tr>
               </thead>
               <tbody>
@@ -34,6 +64,8 @@
             </table>
       </div>
     </div>
+    {% if volver %}
+    {% else %}
     <div class="card mt-3">
         <div class="card-body">
             <h5 class="card-title">Registro ingresos / gastos</h5>
@@ -45,7 +77,7 @@
               {% csrf_token %}
               {% for campo in formulario %}
               <div class="mb-3 col-6">
-                <label for="" class="form-label">{{ campo.label }}: </label>
+                <label for="" class="form-label">{{ campo.label }}: (OBLIGATORIO)</label>
                 {% if campo.field.widget.input_type == "select" %}
                 <select type="{{ campo.field.widget.input_type  }}" name="{{ campo.name }}" id=""
                 placeholder="{{ campo.label }}" class="form-control" default="SELECCIONAR">
@@ -70,5 +102,5 @@
         </div>
     </div>
 </div>
-
+{% endif %}
 {% endblock content %}
