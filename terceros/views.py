@@ -17,7 +17,7 @@ def terceros(request):
             msg='Hubo un error al momento de crear un cliente'
     return render(request,'negocio/terceros/terceros.html',{'datos':datos,'formulario':formulario,'msg':msg})
 
-def eliminar_tercero(id):
+def eliminar_tercero(request,id):
     datos = Tercero.objects.get(id=id)
     datos.delete()
     return redirect('terceros')
