@@ -46,7 +46,7 @@ def ingresos(request):
     
     for valueg in totalGastos:
         sumg = sumg + valueg['valor']
-        
+    print(request.POST.get('id'))    
 
     proveedor=[]
     cliente=[]
@@ -113,8 +113,12 @@ def buscar_dato(request):
         return render(request,'negocio/terceros/terceros.html',{'volver':volver,'esta':no_esta})
 
 @login_required(login_url="/login/")
-def editar(request):
-    return render(request, "negocio/crud/editar.html")
+def editar(request,id):
+    datos = Dato.objects.get(id=id)
+    print(datos)
+    formulario = DatoForm(request.POST or None) 
+    print(request.POST)
+    return render(request, "negocio/crud/editar.html", {'formulario': formulario})
 
 @login_required(login_url="/login/")
 def eliminar(request, id):

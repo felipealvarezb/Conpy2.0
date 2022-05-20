@@ -41,9 +41,9 @@
 
               <thead>
                 <tr>
-                <!--<th>Fecha</th>-->
-                  <th>Movimiento</th>
-                  <th>Nombre Tercero</th>
+                  <th style="word-wrap: break-word" >id</th>
+                  <th style="word-wrap: break-word">Movimiento</th>
+                  <th style="word-wrap: break-word">Nombre Tercero</th>
                   <th style="word-wrap: break-word">Valor</th>
                   <th style="word-wrap: break-word">Descripcion</th>
                 </tr>
@@ -51,12 +51,12 @@
               <tbody>
                 {% for dato in datos%}
                 <tr>
-                  <!--<td>{{ dato.id }}</td>-->
+                  <td>{{ dato.id }}</td>
                   <td>{{ dato.movimiento }}</td>
                   <td>{{ dato.nombre_tercero }}</td>
                   <td> ${{ dato.valor }}</td>
                   <td>{{ dato.descripcion }}</td>
-                  <td> <a href="{% url 'editar'%}" class="btn btn-info" role="button">Editar</a> | 
+                  <td> <a href="{% url 'editar' dato.id%}" class="btn btn-info" role="button">Editar</a> 
                     <a href="{% url 'eliminar' dato.id %}" class="btn btn-danger" role="button">Borrar</a> </td>
                 </tr>
                 {% endfor %}
