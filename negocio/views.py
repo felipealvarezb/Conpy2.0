@@ -115,9 +115,59 @@ def buscar_dato(request):
 @login_required(login_url="/login/")
 def editar(request,id):
     datos = Dato.objects.get(id=id)
-    print(datos)
     formulario = DatoForm(request.POST or None) 
-    print(request.POST)
+    proveedor=[]
+    cliente=[]
+    cambio_nombre=False
+    
+    valido=False
+    p=Tercero.objects.values_list('nombre_tercero','tipo_tercero')
+    for p in request.POST:
+        if request.POST.get('movimiento')!='SELECCIONAR'and p == 'movimiento':
+            if datos.movimiento!=request.POST.get('movimiento'):
+                cambio_nombre=True
+                movimiento=request.POST.get('movimiento')
+                print('quiero un cambio en movimiento')
+        elif request.POST.get('nombre_tercero')!=''and p == 'nombre_tercero':
+            tercero=request.POST.get('nombre_tercero')
+
+
+            a=Tercero.objects.values_list('nombre_tercero','tipo_tercero')
+            for i in a:
+                if i[1]=='proveedor':
+                    proveedor.append(i[0])
+                    
+                elif i[1]=='cliente':
+                    cliente.append(i[0])
+            print('entro en el if')
+            if datos.movimiento=='Gasto' and tercero in proveedor:
+                Dato.objects.select_for_update().filter(id=id).update(nombre_tercero=tercero)
+            elif datos.movimiento=='Ingreso' and tercero in cliente:
+                Dato.objects.select_for_update().filter(id=id).update(nombre_tercero=tercero)
+            elif datos.movimiento=='Ingreso' and tercero in proveedor and cambio_nombre==True:
+                print('entro a ingreso')
+                Dato.objects.select_for_update().filter(id=id).update(movimiento=movimiento,nombre_tercero=tercero)
+            elif datos.movimiento=='Gasto' and tercero in cliente and cambio_nombre==True:
+                print('entro a gasto')
+                Dato.objects.select_for_update().filter(id=id).update(movimiento=movimiento,nombre_tercero=tercero)
+                      
+            
+        elif request.POST.get('valor')!='' and p == 'valor':
+            valor=request.POST.get('valor')
+
+            #valor=float(valor)
+            Dato.objects.select_for_update().filter(id=id).update(valor=valor)
+            
+            
+        elif request.POST.get('descripcion')!='' and p == 'descripcion':
+            
+            mensaje=request.POST.get('descripcion')
+            Dato.objects.select_for_update().filter(id=id).update(descripcion=mensaje)
+            #hacer el datos.update blabla
+        else:
+            
+            error='si'
+    
     return render(request, "negocio/crud/editar.html", {'formulario': formulario})
 
 @login_required(login_url="/login/")

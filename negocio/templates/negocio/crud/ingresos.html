@@ -56,7 +56,7 @@
                   <td>{{ dato.nombre_tercero }}</td>
                   <td> ${{ dato.valor }}</td>
                   <td>{{ dato.descripcion }}</td>
-                  <td> <a href="{% url 'editar' dato.id%}" class="btn btn-info" role="button">Editar</a> 
+                  <td> <a href="{% url 'editar' dato.id %}" class="btn btn-info" role="button">Editar</a> 
                     <a href="{% url 'eliminar' dato.id %}" class="btn btn-danger" role="button">Borrar</a> </td>
                 </tr>
                 {% endfor %}
