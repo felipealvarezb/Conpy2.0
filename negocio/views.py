@@ -46,6 +46,8 @@ def ingresos(request):
     
     for valueg in totalGastos:
         sumg = sumg + valueg['valor']
+        
+    sumtotal = sumi - sumg
     print(request.POST.get('id'))    
 
     proveedor=[]
@@ -67,7 +69,9 @@ def ingresos(request):
         error=None
         if formulario.is_valid() and valido==True:
             formulario.save()
-        return render(request, "negocio/crud/ingresos.html", {'datos': datos, 'formulario': formulario, 'sumi': sumi, 'sumg': sumg,'error':error})
+            
+        context = {'datos': datos, 'formulario': formulario, 'sumi': sumi, 'sumg': sumg,'sumtotal':sumtotal, 'error':error}
+        return render(request, "negocio/crud/ingresos.html", context)
     
     except:  
 

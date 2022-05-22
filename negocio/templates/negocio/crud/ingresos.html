@@ -106,10 +106,14 @@
 
       <div class=" card col-5 mt-3">
         <div class="card-body">
-          <h5 class="card-title">Balance de Resultados</h5>
-          <h4>Total ingresos: </h4><p>${{ sumi }}</p>
-          <h4>Total gastos: </h4><p>${{sumg }}</p>
-          
+          <h4 class="card-title">Balance de Resultados</h4>
+          <h5>Total ingresos: </h5><p>${{ sumi }}</p>
+          <h5>Total gastos: </h5><p>${{sumg }}</p>
+          {% if sumtotal > 0 %}
+          <h5>Estado de resultados: </h5><p>${{sumtotal}} </p><p class="text-success"> Positivo</p>
+          {% else %}
+          <h5>Estado de resultados: </h5><p>${{sumtotal}} </p><p class="text-danger"> Negativo</p>
+          {% endif %}
         </div>
       </div>
     </div>
