@@ -119,8 +119,8 @@ def editar(request,id):
     proveedor=[]
     cliente=[]
     cambio_nombre=False
-    
-    valido=False
+    error=None
+    listo=None
     p=Tercero.objects.values_list('nombre_tercero','tipo_tercero')
     for p in request.POST:
         if request.POST.get('movimiento')!='SELECCIONAR'and p == 'movimiento':
@@ -128,10 +128,10 @@ def editar(request,id):
                 cambio_nombre=True
                 movimiento=request.POST.get('movimiento')
                 print('quiero un cambio en movimiento')
+            else:
+                error='No has cambiado ningun dato'
         elif request.POST.get('nombre_tercero')!=''and p == 'nombre_tercero':
             tercero=request.POST.get('nombre_tercero')
-
-
             a=Tercero.objects.values_list('nombre_tercero','tipo_tercero')
             for i in a:
                 if i[1]=='proveedor':
@@ -142,33 +142,31 @@ def editar(request,id):
             print('entro en el if')
             if datos.movimiento=='Gasto' and tercero in proveedor:
                 Dato.objects.select_for_update().filter(id=id).update(nombre_tercero=tercero)
+                listo='se ha modificado correctamente'
             elif datos.movimiento=='Ingreso' and tercero in cliente:
                 Dato.objects.select_for_update().filter(id=id).update(nombre_tercero=tercero)
+                listo='se ha modificado correctamente'
             elif datos.movimiento=='Ingreso' and tercero in proveedor and cambio_nombre==True:
-                print('entro a ingreso')
                 Dato.objects.select_for_update().filter(id=id).update(movimiento=movimiento,nombre_tercero=tercero)
+                listo='se ha modificado correctamente'
             elif datos.movimiento=='Gasto' and tercero in cliente and cambio_nombre==True:
-                print('entro a gasto')
                 Dato.objects.select_for_update().filter(id=id).update(movimiento=movimiento,nombre_tercero=tercero)
-                      
-            
+                listo='se ha modificado correctamente'
+            else:
+                error='No has cambiado ningun dato'
         elif request.POST.get('valor')!='' and p == 'valor':
             valor=request.POST.get('valor')
-
-            #valor=float(valor)
             Dato.objects.select_for_update().filter(id=id).update(valor=valor)
-            
-            
+            listo='se ha modificado correctamente' 
         elif request.POST.get('descripcion')!='' and p == 'descripcion':
-            
             mensaje=request.POST.get('descripcion')
             Dato.objects.select_for_update().filter(id=id).update(descripcion=mensaje)
-            #hacer el datos.update blabla
+            listo='se ha modificado correctamente'
         else:
-            
-            error='si'
+            error='No has cambiado ningun dato'
+        error='No has cambiado ningun dato'
     
-    return render(request, "negocio/crud/editar.html", {'formulario': formulario})
+    return render(request, "negocio/crud/editar.html", {'formulario': formulario,'error':error,'listo':listo})
 
 @login_required(login_url="/login/")
 def eliminar(request, id):

@@ -59,3 +59,44 @@ def buscar_dato(request):
         volver='a'          
         no_esta='no'   
         return render(request,'negocio/terceros/terceros.html',{'volver':volver,'esta':no_esta})
+
+#arreglar todo eeste metodo
+def editar_dato(request,id):
+    datos = Tercero.objects.get(id=id)
+    formulario = TerceroForm(request.POST or None) 
+    proveedor=[]
+    cliente=[]
+    cambio_nombre=False
+    error=None
+    listo=None
+    #p=Tercero.objects.values_list('nombre_tercero','tipo_tercero')
+
+    print(request.POST.get('celular_tercero'), 'estos son los datos ')
+    for p in request.POST:
+        print(request.POST.get(p), 'este es p')
+        if request.POST.get(p)!='SELECCIONAR'and p == 'Tipo':
+            if datos.movimiento!=request.POST.get('movimiento'):
+                cambio_nombre=True
+                movimiento=request.POST.get('movimiento')
+                print('quiero un cambio en movimiento')
+            else:
+                error='No has cambiado ningun dato'
+        elif request.POST.get(p)!=''and p == 'cedula_tercero':
+            cedula_tercero=request.POST.get('cedula_tercero')
+            Tercero.objects.select_for_update().filter(id=id).update(cedula_tercero=cedula_tercero)
+            listo='se ha modificado correctamente' 
+        elif request.POST.get(p)!='' and p == 'correo_tercero' :
+            correo_tercero=request.POST.get('correo_tercero')
+            Tercero.objects.select_for_update().filter(id=id).update(correo_tercero=correo_tercero)
+            listo='se ha modificado correctamente' 
+        elif request.POST.get(p)!='' and p == 'celular_tercero' and len(request.POST.get(p))==10:
+            
+            print(request.POST.get(p), 'este es el celular ingresado ')
+            celular_tercero=request.POST.get(p)
+            Tercero.objects.select_for_update().filter(id=id).update(celular_tercero=celular_tercero)
+            listo='se ha modificado correctamente'
+        else:
+            error='No has cambiado ningun dato'
+        error='No has cambiado ningun dato'
+    
+    return render(request, "negocio/terceros/editar.html", {'formulario': formulario,'error':error,'listo':listo})
