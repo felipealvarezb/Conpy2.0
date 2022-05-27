@@ -72,7 +72,7 @@ def editar_dato(request,id):
     #p=Tercero.objects.values_list('nombre_tercero','tipo_tercero')
 
     for p in request.POST:
-        print(datos.tipo_tercero, 'este es p')
+        
         if request.POST.get(p)!='SELECCIONAR'and p == 'tipo_tercero':
             if datos.tipo_tercero!=request.POST.get('tipo_tercero'):
                 tipo_tercero=request.POST.get('tipo_tercero')
@@ -95,7 +95,6 @@ def editar_dato(request,id):
             listo='se ha modificado correctamente' 
         elif request.POST.get(p)!='' and p == 'celular_tercero' and len(request.POST.get(p))==10:
             
-            print(request.POST.get(p), 'este es el celular ingresado ')
             celular_tercero=request.POST.get(p)
             Tercero.objects.select_for_update().filter(id=id).update(celular_tercero=celular_tercero)
             listo='se ha modificado correctamente'
