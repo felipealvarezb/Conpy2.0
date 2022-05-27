@@ -71,16 +71,20 @@ def editar_dato(request,id):
     listo=None
     #p=Tercero.objects.values_list('nombre_tercero','tipo_tercero')
 
-    print(request.POST.get('celular_tercero'), 'estos son los datos ')
     for p in request.POST:
-        print(request.POST.get(p), 'este es p')
-        if request.POST.get(p)!='SELECCIONAR'and p == 'Tipo':
-            if datos.movimiento!=request.POST.get('movimiento'):
-                cambio_nombre=True
-                movimiento=request.POST.get('movimiento')
-                print('quiero un cambio en movimiento')
+        print(datos.tipo_tercero, 'este es p')
+        if request.POST.get(p)!='SELECCIONAR'and p == 'tipo_tercero':
+            if datos.tipo_tercero!=request.POST.get('tipo_tercero'):
+                tipo_tercero=request.POST.get('tipo_tercero')
+                Tercero.objects.select_for_update().filter(id=id).update(tipo_tercero=tipo_tercero)
+                print('quiero un cambio en tercero',tipo_tercero)
+                listo='se ha modificado correctamente'
             else:
                 error='No has cambiado ningun dato'
+        elif request.POST.get(p)!='' and p == 'nombre_tercero':
+            nombre_tercero=request.POST.get('nombre_tercero')
+            Tercero.objects.select_for_update().filter(id=id).update(nombre_tercero=nombre_tercero)
+            listo='se ha modificado correctamente' 
         elif request.POST.get(p)!=''and p == 'cedula_tercero':
             cedula_tercero=request.POST.get('cedula_tercero')
             Tercero.objects.select_for_update().filter(id=id).update(cedula_tercero=cedula_tercero)
