@@ -25,11 +25,12 @@ SECRET_KEY = 'django-insecure-5h*&0qmip6t*a8_0a%hi)m8*cz4r%_f%v&i7!&b5@$vm@j2j05
 DEBUG = True
 LOGOUT_REDIRECT_URL = "home"
 LOGIN_REDIRECT_URL = "home" 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['34.121.251.108']
 
 
 
 # Application definition
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
