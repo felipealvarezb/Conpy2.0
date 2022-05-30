@@ -8,13 +8,19 @@ def get_graph():
     plt.savefig(buffer,format='png')
     buffer.seek(0)
     image_png=buffer.getvalue()
-    print(image_png)
     graph= base64.b64encode(image_png)
     graph=graph.decode('utf-8')
     buffer.close()
     return graph
 
-def get_plot(x,y):
-    
+def get_plot(x,y,nomb_tabla,nomb_x,nomb_y):
+    plt.switch_backend('AGG')
+    plt.figure(figsize=(10,3))
+    plt.title(nomb_tabla)
+    plt.plot(x,y)
+    plt.xticks(rotation=45)
+    plt.xlabel(nomb_x)
+    plt.ylabel(nomb_y)
+    plt.tight_layout()
     graph=get_graph()
     return graph

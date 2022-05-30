@@ -4,10 +4,39 @@ from django.contrib.auth.decorators import login_required
 from .models import Dato, Notificacion
 from terceros.models import Tercero
 from .forms import DatoForm, NotificacionForm
+from .utils import get_plot
 
 @login_required(login_url="/login/")
 def home(request):
-    return render(request, "negocio/home.html")
+    #empieza todo para la tabla de ganancias por mes
+    qs=Dato.objects.all()
+    x = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    y=[]
+    tmp=[]
+    res=0
+    for a in qs:
+        if a.movimiento=='Gasto':
+            valor=a.valor
+            valor*=-1
+            tmp.append([[valor],[a.fecha_creacion.month-1]])
+        else:
+            tmp.append([[a.valor],[a.fecha_creacion.month-1]])
+    for i in range(len(x)):
+        for j in range(len(tmp)):
+            mes=tmp[j][1]
+            mes=mes[0]
+            print(f'mes: {mes},     mesI: {i}')
+            if mes==i:
+                print('entro en mes')
+                valor=tmp[j][0]
+                res+=valor[0]
+                
+        y.append(res)
+        res=0
+    chart=get_plot(x,y,'Movimientos','Meses','Ganancias')
+    #acaba todo lo de tabla de ganancias por mes
+    
+    return render(request, "negocio/home.html",{'chart':chart})
 
 @login_required(login_url="/login/")
 def notificaciones(request):
