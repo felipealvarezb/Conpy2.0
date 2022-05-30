@@ -9,7 +9,7 @@ class Dato(models.Model):
         ('Gasto', 'Gasto'),
     )
     id = models.AutoField(primary_key=True)
-    fecha_creacion= models.DateTimeField(auto_now_add=True, blank=True)
+    fecha_creacion= models.DateTimeField(auto_now_add=True, blank=True,verbose_name='Fecha')
     movimiento = models.CharField(max_length=7, choices=options, verbose_name='Movimiento', null=True)
     nombre_tercero=models.TextField(max_length=35,verbose_name='Tercero',default=None, error_messages={'blank':'El tercero que ingresaste no existe'})
     valor = models.FloatField( verbose_name='Valor')
