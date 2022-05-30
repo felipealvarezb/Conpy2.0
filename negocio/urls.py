@@ -5,7 +5,7 @@ from negocio import views as nviews
 
 
 urlpatterns = [
-    path('', nviews.home, name="home"),
+    path('home/', nviews.home, name="home"),
     path('ingresos/', nviews.ingresos, name="ingresos"),
     path('ingresos/editar/', nviews.editar, name="editar"),   
     path('eliminar/<int:id>', nviews.eliminar, name="eliminar"),
