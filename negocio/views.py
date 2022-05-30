@@ -1,3 +1,4 @@
+from tkinter import dialog
 from typing import List
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
@@ -8,9 +9,9 @@ from .utils import get_plot
 
 @login_required(login_url="/login/")
 def home(request):
-    #empieza todo para la tabla de ganancias por mes
+    #empieza tabla de ganancias mensuales
     qs=Dato.objects.all()
-    x = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    x = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
     y=[]
     tmp=[]
     res=0
@@ -31,10 +32,38 @@ def home(request):
                 
         y.append(res)
         res=0
-    chart=get_plot(x,y,'Movimientos - Mensuales','Meses','Ganancias')
-    #acaba todo lo de tabla de ganancias por mes
+    mensual=get_plot(x,y,'Movimientos - Mensuales','Meses','Ganancias')
+    #acaba tabla de ganancias mensuales
     
-    return render(request, "negocio/home.html",{'chart':chart})
+    #empieza tabla ganacias diarias
+    x = ['Dom','Lun','Mar','Mie','Jue','Vie','Sab']
+    
+    y=[]
+    tmp=[]
+    res=0
+    for a in qs:
+        if a.movimiento=='Gasto':
+            valor=a.valor
+            valor*=-1
+            tmp.append([[valor],[a.fecha_creacion.strftime("%w")]])
+        else:
+            tmp.append([[a.valor],[a.fecha_creacion.strftime("%w")]])
+    for i in range(len(x)):
+        for j in range(len(tmp)):
+            dia=tmp[j][1]
+            dia=dia[0]
+            
+            print(f'diaJ: {type(dia)}    diaI: {type(i)}')
+            if int(dia)==i:
+                print('entro en dia')
+                valor=tmp[j][0]
+                res+=valor[0]
+                
+        y.append(res)
+        res=0
+    #acaba tabla de ganancias diarias
+    semanal=get_plot(x,y,'Movimientos - semanales','Meses','Ganancias')
+    return render(request, "negocio/home.html",{'mensual':mensual,'semanal':semanal})
 
 @login_required(login_url="/login/")
 def notificaciones(request):

@@ -12,8 +12,11 @@
         </div>
     </div>
     <div class="card mt-3">
-      {% if chart %}
-        <img src="data:image/png;base64, {{chart|safe}}">
+      {% if mensual %}
+        <img src="data:image/png;base64, {{mensual|safe}}">
+      {% endif %}
+      {% if semanal %}
+        <img src="data:image/png;base64, {{semanal|safe}}">
       {% endif %}
     </div>
 </div>
