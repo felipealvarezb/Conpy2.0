@@ -25,15 +25,13 @@ def home(request):
         for j in range(len(tmp)):
             mes=tmp[j][1]
             mes=mes[0]
-            print(f'mes: {mes},     mesI: {i}')
             if mes==i:
-                print('entro en mes')
                 valor=tmp[j][0]
                 res+=valor[0]
                 
         y.append(res)
         res=0
-    chart=get_plot(x,y,'Movimientos','Meses','Ganancias')
+    chart=get_plot(x,y,'Movimientos - Mensuales','Meses','Ganancias')
     #acaba todo lo de tabla de ganancias por mes
     
     return render(request, "negocio/home.html",{'chart':chart})
