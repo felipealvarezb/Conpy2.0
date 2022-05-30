@@ -26,6 +26,7 @@ DEBUG = True
 LOGOUT_REDIRECT_URL = "home"
 LOGIN_REDIRECT_URL = "home" 
 ALLOWED_HOSTS = ['34.121.251.108']
+"""ALLOWED_HOSTS = ['0.0.0.0']"""
 
 
 
