@@ -20,7 +20,7 @@ def login_view(request):
             if user is not None:
                 login(request, user)
                 mn.check_notificaciones_db()
-                return redirect("/")
+                return redirect("/home/")
             else:
                 msg = 'Invalid credentials'
         else:

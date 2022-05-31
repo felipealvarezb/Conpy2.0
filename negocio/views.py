@@ -53,7 +53,6 @@ def home(request):
             dia=tmp[j][1]
             dia=dia[0]
             
-            print(f'diaJ: {type(dia)}    diaI: {type(i)}')
             if int(dia)==i:
                 print('entro en dia')
                 valor=tmp[j][0]
