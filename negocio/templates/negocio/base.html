@@ -12,6 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Fontsawesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" >
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}" type="text/css">
     <title>Conpy</title>
 
  <body>
@@ -19,7 +20,7 @@
     <div class="wrapper">
         
         <div class="sidebar">
-           <img src="{% static  'externos/logo.png' %}"height="200px" width="100px" >
+            <img src="{% static  'imagenes/logo.png' %}" height="200px" width="200px" />
             {% include 'externos/sidebar.html' %}
            
         </div>
